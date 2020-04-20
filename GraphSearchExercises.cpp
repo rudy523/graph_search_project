@@ -58,6 +58,8 @@ int GridGraph::countEdges() const {
       numEdges += k->second.size();
   }
   numEdges = numEdges / 2;
+
+  return numEdges;
   // =======================================================================
 }
 
