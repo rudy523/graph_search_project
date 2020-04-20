@@ -53,7 +53,7 @@ int GridGraph::countEdges() const {
   // TODO: Your code here!
 
   // Method 1
-  for ( auto& k = GridGraph::adjacencyMap.cbegin(); k != GridGraph::adjacencyMap.cend(); k++) {
+  for ( auto& k = adjacencyMap.cbegin(); k != adjacencyMap.cend(); ++k) {
     // for (int k2; k2 < k->second.size(); k++) 
       numEdges += k->second.size();
   }
