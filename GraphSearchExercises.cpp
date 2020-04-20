@@ -100,7 +100,7 @@ void GridGraph::removePoint(const IntPair& p1) {
 
   // =======================================================================
   // TODO: Your code here!
-  for (auto& k : originalNeighbors) GridGraph::removeEdge(p1, k);
+  for (auto& k : originalNeighbors) removeEdge(p1, k);
   // =======================================================================
 
   // Finally, for the one point we are removing, erase the point key itself
@@ -110,7 +110,7 @@ void GridGraph::removePoint(const IntPair& p1) {
 
   // =======================================================================
   // TODO: Your code here!
-  GridGraph::adjacencyMap.erase(p1);
+  adjacencyMap.erase(p1);
   // =======================================================================
 }
 
