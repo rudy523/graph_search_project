@@ -314,7 +314,7 @@ std::list<IntPair> graphBFS(const IntPair& start, const IntPair& goal, const Gri
       // ==================================================================
       // TODO: Your code here!
       // Check whether the neighbor has already been visited.
-      bool neighborWasAlreadyVisited = (visitedSet.count(curPoint) > 0) ? true : false;
+      bool neighborWasAlreadyVisited = (visitedSet.count(neighbor) > 0) ? true : false;
       // ==================================================================
 
       // If this adjacent vertex has NOT been visited before, we will visit it now.
