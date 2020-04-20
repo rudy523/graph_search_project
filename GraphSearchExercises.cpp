@@ -51,21 +51,17 @@ int GridGraph::countEdges() const {
 
   // =======================================================================
   // TODO: Your code here!
-  // =======================================================================
 
-  // cbegin loop
+  // Method 1
   for ( auto& k = GridGraph::adjacencyMap.cbegin(); k != GridGraph::adjacencyMap.cend(); k++) {
-    for (int k2; k2 < k->second.size(); k++) {
-      numEdges++;
-    }
+    // for (int k2; k2 < k->second.size(); k++) 
+      numEdges += k->second.size();
   }
-
-  // auto range loop
-  for ( auto& key1 : adjacencyMap) {
-    
-  }
-  return numEdges;
+  numEdges = numEdges / 2;
+  // =======================================================================
 }
+
+
 
 // GridGraph::removePoint:
 // This function takes a point (an IntPair) as input, and it should remove
@@ -102,6 +98,7 @@ void GridGraph::removePoint(const IntPair& p1) {
 
   // =======================================================================
   // TODO: Your code here!
+  for (auto& k : originalNeighbors) GridGraph::removeEdge(p1, k);
   // =======================================================================
 
   // Finally, for the one point we are removing, erase the point key itself
@@ -111,6 +108,7 @@ void GridGraph::removePoint(const IntPair& p1) {
 
   // =======================================================================
   // TODO: Your code here!
+  GridGraph::adjacencyMap.erase(p1);
   // =======================================================================
 }
 
@@ -306,7 +304,7 @@ std::list<IntPair> graphBFS(const IntPair& start, const IntPair& goal, const Gri
     // TODO: Your code here!
     // We'll need to loop over the neighbors that are the points adjacent to curPoint.
     // Get a copy of the set of neighbors we're going to loop over.
-    GridGraph::NeighborSet neighbors; // Change this...
+    GridGraph::NeighborSet neighbors = graph.adjacencyMap.at(curPoint);
     // =====================================================================
 
     for (auto neighbor : neighbors) {
@@ -314,7 +312,7 @@ std::list<IntPair> graphBFS(const IntPair& start, const IntPair& goal, const Gri
       // ==================================================================
       // TODO: Your code here!
       // Check whether the neighbor has already been visited.
-      bool neighborWasAlreadyVisited = false; // Change this...
+      bool neighborWasAlreadyVisited = (visitedSet.count(curPoint) > 0) ? true : false;
       // ==================================================================
 
       // If this adjacent vertex has NOT been visited before, we will visit it now.
@@ -324,18 +322,18 @@ std::list<IntPair> graphBFS(const IntPair& start, const IntPair& goal, const Gri
 
         // ================================================================
         // TODO: Your code here!
-
+        
         // Record that the curPoint is the predecessor of the neighbor point,
         // since curPoint has just led to the discovery of this neighbor for
         // the first time.
         // ...
-
+        pred[neighbor] = curPoint;
         // Add neighbor to the visited set.
         // ...
-
+        visitedSet.insert(neighbor);
         // Push neighbor into the exploration queue.
         // ...
-
+        exploreQ.push(neighbor);
         // ================================================================
 
         // Check if we've taken too many steps so far.
@@ -522,7 +520,7 @@ std::list<PuzzleState> puzzleBFS(const PuzzleState& start, const PuzzleState& go
     // We'll need to loop over the neighbors that are the points adjacent to curState.
     // We need a collection of neighbors we're going to loop over.
     
-    auto neighbors = {start}; // Change this! This line is totally wrong.
+    auto neighbors = curState.getAdjacentStates(); // Change this! This line is totally wrong.
 
     // Hint: Look at PuzzleState.h
     // =====================================================================
@@ -532,7 +530,7 @@ std::list<PuzzleState> puzzleBFS(const PuzzleState& start, const PuzzleState& go
       // ==================================================================
       // TODO: Your code here!
       // Check whether the neighbor has already been visited.
-      bool neighborWasAlreadyVisited = false; // Change this...
+      bool neighborWasAlreadyVisited = (visitedSet.count(neighbor) > 0) ? true : false;
       // ==================================================================
 
       if (!neighborWasAlreadyVisited) {
@@ -544,13 +542,13 @@ std::list<PuzzleState> puzzleBFS(const PuzzleState& start, const PuzzleState& go
         // since curState has just led to the discovery of this neighbor for
         // the first time.
         // ...
-
+        pred[neighbor] = curState;
         // Add neighbor to the visited set.
         // ...
-
+        visitedSet.insert(neighbor);
         // Push neighbor into the exploration queue.
         // ...
-
+        exploreQ.push(neighbor);
         // ================================================================
 
         dist[neighbor] = dist[curState]+1;
